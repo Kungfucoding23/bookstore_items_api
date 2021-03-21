@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/Kungfucoding23/bookstore_items_api/client/elasticsearch"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -14,6 +15,7 @@ var (
 )
 
 func StartApplication() {
+	elasticsearch.Init()
 	mapUrls()
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
