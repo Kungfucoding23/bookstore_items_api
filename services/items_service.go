@@ -1,6 +1,8 @@
 package services
 
 import (
+	"net/http"
+
 	"github.com/Kungfucoding23/bookstore_items_api/domain/items"
 	"github.com/Kungfucoding23/bookstore_utils-go/rest_errors"
 )
@@ -10,19 +12,19 @@ var (
 )
 
 type itemsServiceInterface interface {
-	Create(items.Item) (*items.Item, *rest_errors.RestErr)
-	Get(string) (*items.Item, *rest_errors.RestErr)
+	Create(items.Item) (*items.Item, rest_errors.RestErr)
+	Get(string) (*items.Item, rest_errors.RestErr)
 }
 
 type itemsService struct{}
 
-func (s *itemsService) Create(item items.Item) (*items.Item, *rest_errors.RestErr) {
+func (s *itemsService) Create(item items.Item) (*items.Item, rest_errors.RestErr) {
 	if err := item.Save(); err != nil {
-		return nil, err
+		return nil, rest_errors.NewRestError(err.Message(), err.Status(), err.Error(), err.Causes())
 	}
-	return nil, nil
+	return &item, nil
 }
 
-func (s *itemsService) Get(string) (*items.Item, *rest_errors.RestErr) {
-	return nil, nil
+func (s *itemsService) Get(string) (*items.Item, rest_errors.RestErr) {
+	return nil, rest_errors.NewRestError("implement me!", http.StatusNotImplemented, "not_implemented", nil)
 }
